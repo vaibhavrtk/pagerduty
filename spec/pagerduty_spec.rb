@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require "spec_helper"
 
@@ -26,57 +27,57 @@ describe Pagerduty do
       context "all options" do
         When(:incident) {
           pagerduty.trigger(
-            summary: "summary",
-            source: "source",
-            severity: "critical",
-            timestamp: "timestamp",
-            component: "component",
-            group: "group",
-            class: "class",
+            summary:        "summary",
+            source:         "source",
+            severity:       "critical",
+            timestamp:      "timestamp",
+            component:      "component",
+            group:          "group",
+            class:          "class",
             custom_details: {
               random: "random",
             },
-            images: [{
-              src: "http://via.placeholder.com/350x150",
+            images:         [{
+              src:  "http://via.placeholder.com/350x150",
               href: "https://example.com/",
-              alt: "Example text",
+              alt:  "Example text",
             }],
-            links: [{
+            links:          [{
               href: "https://example.com/",
               text: "Link text",
             }],
-            client: "Sample Monitoring Service",
-            client_url: "https://monitoring.example.com",
+            client:         "Sample Monitoring Service",
+            client_url:     "https://monitoring.example.com",
           )
         }
         Then {
           expect(transport).to have_received(:send_payload).with(
-            routing_key: "a-test-routing-key",
+            routing_key:  "a-test-routing-key",
             event_action: "trigger",
-            dedup_key: nil,
-            payload: {
-              summary: "summary",
-              source: "source",
-              severity: "critical",
-              timestamp: "timestamp",
-              component: "component",
-              group: "group",
-              class: "class",
+            dedup_key:    nil,
+            payload:      {
+              summary:        "summary",
+              source:         "source",
+              severity:       "critical",
+              timestamp:      "timestamp",
+              component:      "component",
+              group:          "group",
+              class:          "class",
               custom_details: {
                 random: "random",
               },
             },
-            images: [{
-              src: "http://via.placeholder.com/350x150",
+            images:       [{
+              src:  "http://via.placeholder.com/350x150",
               href: "https://example.com/",
-              alt: "Example text",
+              alt:  "Example text",
             }],
-            links: [{
+            links:        [{
               href: "https://example.com/",
               text: "Link text",
             }],
-            client: "Sample Monitoring Service",
-            client_url: "https://monitoring.example.com",
+            client:       "Sample Monitoring Service",
+            client_url:   "https://monitoring.example.com",
           )
         }
       end
@@ -84,8 +85,8 @@ describe Pagerduty do
       context "with proxy" do
         Given(:options) {
           {
-            proxy_host: "test-proxy-host",
-            proxy_port: "test-proxy-port",
+            proxy_host:     "test-proxy-host",
+            proxy_port:     "test-proxy-port",
             proxy_username: "test-proxy-username",
             proxy_password: "test-proxy-password",
           }
@@ -98,8 +99,8 @@ describe Pagerduty do
         When(:incident) { pagerduty.trigger("a-test-description") }
         Then {
           expect(Pagerduty::HttpTransport).to have_received(:new).with(
-            proxy_host: "test-proxy-host",
-            proxy_port: "test-proxy-port",
+            proxy_host:     "test-proxy-host",
+            proxy_port:     "test-proxy-port",
             proxy_username: "test-proxy-username",
             proxy_password: "test-proxy-password",
           )
@@ -124,7 +125,7 @@ describe Pagerduty do
       context "PagerDuty fails to create the incident" do
         Given {
           allow(transport).to receive(:send_payload).and_return(
-            "status" => "invalid event",
+            "status"  => "invalid event",
             "message" => "Event object is invalid",
           )
         }
@@ -180,12 +181,12 @@ describe Pagerduty do
           Then {
             expect(transport).to have_received(:send_payload).with(
               event_action: "acknowledge",
-              routing_key: "a-test-routing-key",
-              dedup_key: "a-test-dedup-key",
-              images: nil,
-              links: nil,
-              client: nil,
-              client_url: nil,
+              routing_key:  "a-test-routing-key",
+              dedup_key:    "a-test-dedup-key",
+              images:       nil,
+              links:        nil,
+              client:       nil,
+              client_url:   nil,
             )
           }
         end
@@ -221,7 +222,7 @@ describe Pagerduty do
         context "PagerDuty fails to acknowledge the incident" do
           Given {
             allow(transport).to receive(:send_payload).and_return(
-              "status" => "invalid event",
+              "status"  => "invalid event",
               "message" => "Event object is invalid",
             )
           }
@@ -254,12 +255,12 @@ describe Pagerduty do
           Then {
             expect(transport).to have_received(:send_payload).with(
               event_action: "resolve",
-              routing_key: "a-test-routing-key",
-              dedup_key: "a-test-dedup-key",
-              images: nil,
-              links: nil,
-              client: nil,
-              client_url: nil,
+              routing_key:  "a-test-routing-key",
+              dedup_key:    "a-test-dedup-key",
+              images:       nil,
+              links:        nil,
+              client:       nil,
+              client_url:   nil,
             )
           }
         end
@@ -293,7 +294,7 @@ describe Pagerduty do
         context "PagerDuty fails to create the incident" do
           Given {
             allow(transport).to receive(:send_payload).and_return(
-              "status" => "invalid event",
+              "status"  => "invalid event",
               "message" => "Event object is invalid",
             )
           }
@@ -335,15 +336,15 @@ describe Pagerduty do
           Then {
             expect(transport).to have_received(:send_payload).with(
               routing_key:  "a-test-routing-key",
-              dedup_key: "instance dedup_key",
-              event_action:   "trigger",
-              images: nil,
-              links: nil,
-              client: nil,
-              client_url: nil,
-              payload: {
-                summary: "summary",
-                source: "source",
+              dedup_key:    "instance dedup_key",
+              event_action: "trigger",
+              images:       nil,
+              links:        nil,
+              client:       nil,
+              client_url:   nil,
+              payload:      {
+                summary:  "summary",
+                source:   "source",
                 severity: "critical",
               },
             )
@@ -359,12 +360,12 @@ describe Pagerduty do
           Then {
             expect(transport).to have_received(:send_payload).with(
               routing_key:  "a-test-routing-key",
-              dedup_key: "instance dedup_key",
-              event_action:   "trigger",
-              images: nil,
-              links: nil,
-              client: nil,
-              client_url: nil,
+              dedup_key:    "instance dedup_key",
+              event_action: "trigger",
+              images:       nil,
+              links:        nil,
+              client:       nil,
+              client_url:   nil,
             )
           }
         end
@@ -374,16 +375,16 @@ describe Pagerduty do
 
   def standard_response
     {
-      "status" => "success",
-      "message" => "MY MESSAGE",
+      "status"    => "success",
+      "message"   => "MY MESSAGE",
       "dedup_key" => "my-dedup-key",
     }
   end
 
   def min_req_input
     {
-      summary: "summary",
-      source: "source",
+      summary:  "summary",
+      source:   "source",
       severity: "critical",
     }
   end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require "spec_helper"
 
@@ -16,9 +17,9 @@ describe Pagerduty::HttpTransport do
     Given(:payload) {
       {
         event_action: "trigger",
-        service_key: "test-srvc-key",
-        description: "test-desc",
-        details: { key: "value" },
+        service_key:  "test-srvc-key",
+        description:  "test-desc",
+        details:      { key: "value" },
       }
     }
 
@@ -90,8 +91,8 @@ describe Pagerduty::HttpTransport do
     describe "proxy use" do
       Given(:options) {
         {
-          proxy_host: "test-proxy-host",
-          proxy_port: "test-proxy-port",
+          proxy_host:     "test-proxy-host",
+          proxy_port:     "test-proxy-port",
           proxy_username: "test-proxy-username",
           proxy_password: "test-proxy-password",
         }

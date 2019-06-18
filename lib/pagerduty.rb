@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "pagerduty/version"
 require "pagerduty/http_transport"
 
@@ -88,6 +90,7 @@ class Pagerduty
   #
   def trigger(options)
     raise ArgumentError, "options hash is nil" if options.nil?
+
     resp = api_call("trigger", options)
     ensure_success(resp)
     PagerdutyIncident.new(
@@ -105,6 +108,7 @@ class Pagerduty
   #
   def get_incident(dedup_key)
     raise ArgumentError, "dedup_key is nil" if dedup_key.nil?
+
     PagerdutyIncident.new(
       routing_key,
       dedup_key,
@@ -112,7 +116,7 @@ class Pagerduty
     )
   end
 
-protected
+  protected
 
   def api_call(event_action, args)
     payload = {
@@ -135,7 +139,7 @@ protected
     end
   end
 
-private
+  private
 
   # @api private
   def transport_from_options(options = {})
@@ -192,7 +196,7 @@ class PagerdutyIncident < Pagerduty
     modify_incident("resolve")
   end
 
-private
+  private
 
   def modify_incident(event_action)
     options = { dedup_key: dedup_key }

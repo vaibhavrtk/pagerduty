@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require "json"
 require "net/https"
@@ -5,9 +6,9 @@ require "net/https"
 class Pagerduty
   # @api private
   class HttpTransport
-    HOST = "events.pagerduty.com".freeze
+    HOST = "events.pagerduty.com"
     PORT = 443
-    PATH = "/v2/enqueue".freeze
+    PATH = "/v2/enqueue"
 
     def initialize(options = {})
       @options = options
@@ -19,7 +20,7 @@ class Pagerduty
       JSON.parse(response.body)
     end
 
-  private
+    private
 
     def post(payload)
       post = Net::HTTP::Post.new(PATH)
